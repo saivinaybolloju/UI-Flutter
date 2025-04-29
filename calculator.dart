@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:js_interop';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +7,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     MyHomePage home1=MyHomePage(title: "Calculator Page");
@@ -33,30 +29,43 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
+  var a=10;
+  var b=10;
+  var output='0';
+  TextEditingController num1=TextEditingController();
+  TextEditingController num2=TextEditingController();
+  void setResult(var res){
+    setState((){
+      output=res;
+    });
+  }
+  void add(){
+    a=int.parse(num1.text);
+    b=int.parse(num2.text);
+    setResult('${a+b}');
+    print(output);
+  }
+  void sub(){
+    a=int.parse(num1.text);
+    b=int.parse(num2.text);
+    setResult('${a-b}');
+    print(output);
+  }
+  void mul(){
+    a=int.parse(num1.text);
+    b=int.parse(num2.text);
+    setResult('${a*b}');
+    print(output);
+  }
+  void div(){
+    a=int.parse(num1.text);
+    b=int.parse(num2.text);
+    setResult('${a/b}');
+    print(output);
+
+  }
+  
   Widget build(BuildContext context) {
-    TextEditingController num1=TextEditingController();
-    TextEditingController num2=TextEditingController();
-    String result="0";
-
-    void add(){
-      setState(() {
-        result='${int.parse(num1.text)+int.parse(num2.text)}';
-      });
-
-    }
-    int sub(int a,int b){
-      return(a-b);
-    }
-    int mul(int a,int b){
-      return(a*b);
-    }
-    double div(int a,int b){
-      // if(b!=0) {
-        return(a/b);
-      // }
-    }
-
-
     return Scaffold(
       appBar: AppBar(
 
@@ -65,8 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+        
           child: Container(
             height: 400,
             width: 400,
@@ -95,7 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     children: [
 
                       Container(
-                        child:Text(result,style:TextStyle(fontSize: 30,fontFamily:'Sans-Serif')),
+                        child:Text(output,
+                                   style:TextStyle(fontSize: 30,fontFamily:'Sans-Serif')),
                       ),
                       SizedBox(
                         height:50,
@@ -119,9 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             ElevatedButton(onPressed: add, child: Icon(Icons.add)),
-                            ElevatedButton(onPressed: ()=>{print(sub(2,3))}, child: Icon(Icons.minimize)),
-                            ElevatedButton(onPressed: ()=>{print(mul(2,3))}, child: Icon(Icons.add)),
-                            ElevatedButton(onPressed: ()=>{print(div(2,0))}, child: Text("/")),
+                            ElevatedButton(onPressed: sub, child: Icon(Icons.minimize)),
+                            ElevatedButton(onPressed: mul, child: Icon(Icons.add)),
+                            ElevatedButton(onPressed: div, child: Text("/")),
                           ],
                         ), 
                       )
@@ -133,11 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           )
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()=>{},
-        tooltip: 'Submit',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      
     );
   }
 }
